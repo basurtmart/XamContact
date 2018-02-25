@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugin.Connectivity;
 using Xamarin.Forms;
-using XamContacts.Data;
 using XamContacts.Helpers;
 using XamContacts.Model;
 using XamContacts.View;
@@ -24,7 +23,10 @@ namespace XamContacts.ViewModel
         {
             Navigation = navigation;
             var isConnected = CrossConnectivity.Current.IsConnected;
-            Task.Run(async () => ContactsList = await ContactsManager.DefaultManager.GetItemsGroupedAsync(isConnected)).Wait();
+            //Task.Run(async () => ContactsList = await ContactsManager.DefaultManager.GetItemsGroupedAsync(isConnected)).Wait();
+            Task.Run(async () =>
+                ContactsList = await App.CloudService.GetTableAsync<Contact>().Result
+                    .GetItemsGrouppedAsync(isConnected)).Wait();
             AddContactCommand = new Command(async () => await GoToContactDetailPage());
             ItemTappedCommand = new Command(async () => GoToContactDetailPage(CurrentContact));
         }

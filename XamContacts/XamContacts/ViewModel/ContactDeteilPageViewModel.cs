@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using XamContacts.Data;
 using XamContacts.Model;
 
 namespace XamContacts.ViewModel
@@ -33,7 +32,8 @@ namespace XamContacts.ViewModel
         public async Task SaveContact()
         {
             //await App.Database.SaveItemAsync(CurrentContact);
-            await ContactsManager.DefaultManager.SaveItemAsync(CurrentContact);
+            //await ContactsManager.DefaultManager.SaveItemAsync(CurrentContact);
+            await App.CloudService.GetTableAsync<Contact>().Result.SavetemAsync(CurrentContact);
             await Navigation.PopToRootAsync();
         }
     }

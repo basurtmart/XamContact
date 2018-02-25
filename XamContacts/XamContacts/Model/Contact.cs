@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using XamContacts.Abstractions;
 
 //using SQLite;
 
 namespace XamContacts.Model
 {
-    public class Contact
+    public class Contact : TableData
     {
-        [JsonProperty("id")]
-        public string Id { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("phone")]
