@@ -21,8 +21,8 @@ namespace XamContacts.Data
 
         private ContactsManager()
         {
-            client = new MobileServiceClient("https://udemydemo01.azurewebsites.net");
-            var store = new MobileServiceSQLiteStore("contacts2.db");
+            client = new MobileServiceClient("https://democsbackend.azurewebsites.net");
+            var store = new MobileServiceSQLiteStore("contacts10.db");
             store.DefineTable<Contact>();
             this.client.SyncContext.InitializeAsync(store);
 
