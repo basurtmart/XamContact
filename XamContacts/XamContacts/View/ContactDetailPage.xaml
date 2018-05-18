@@ -8,8 +8,8 @@
             <Label
                 Text="Nombre:"
                 WidthRequest="100"/>
-            <Entry 
-                Placeholder="Martín"
+            <Entry
+                Placeholder="Héctor"
                 HorizontalOptions="FillAndExpand"
                 Text="{Binding CurrentContact.Name}"/>
         </StackLayout>
@@ -18,8 +18,8 @@
             <Label
                 Text="Teléfono:"
                 WidthRequest="100"/>
-            <Entry 
-                Placeholder="(888)5555555"
+            <Entry
+                Placeholder="(888)3232432"
                 HorizontalOptions="FillAndExpand"
                 Text="{Binding CurrentContact.Phone}"/>
         </StackLayout>
@@ -28,12 +28,12 @@
             <Label
                 Text="Dirección:"
                 WidthRequest="100"/>
-            <Entry 
+            <Entry
                 Placeholder="Coloca tu dirección"
                 HorizontalOptions="FillAndExpand"
                 Text="{Binding CurrentContact.Address}"/>
         </StackLayout>
-        <Label 
+        <Label
             Text="Notas:"
             WidthRequest="100"/>
         <Editor

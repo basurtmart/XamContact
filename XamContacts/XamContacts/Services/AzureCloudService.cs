@@ -14,8 +14,10 @@ namespace XamContacts.Services
         private MobileServiceClient client;
         public AzureCloudService()
         {
-            client = new MobileServiceClient("https://democsbackend.azurewebsites.net");
+            client =
+                new MobileServiceClient("https://democsbackend.azurewebsites.net");
         }
+
         public async Task<ICloudTable<T>> GetTableAsync<T>() where T : TableData
         {
             await InitializeAsync();
@@ -29,10 +31,12 @@ namespace XamContacts.Services
                 return;
             }
 
-            var store = new MobileServiceSQLiteStore("offlinecache.db");
+            var store =
+                new MobileServiceSQLiteStore("offlinecache.db");
             store.DefineTable<Contact>();
 
             await client.SyncContext.InitializeAsync(store);
         }
+
     }
 }

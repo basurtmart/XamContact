@@ -11,23 +11,25 @@ using XamContacts.ViewModel;
 
 namespace XamContacts.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ContactDetailPage : ContentPage
-	{
-        public ContactDeteilPageViewModel ViewModel { get; set; }
-		public ContactDetailPage (Contact contact = null)
-		{
-			InitializeComponent ();
-		    if (contact == null)
-		    {
-		        ViewModel = new ContactDeteilPageViewModel(Navigation);
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ContactDetailPage : ContentPage
+    {
+        public ContactDetailPageViewModel ViewModel { get; set; }
+        public ContactDetailPage(Contact contact = null)
+        {
+            InitializeComponent();
+            if (contact == null)
+            {
+                ViewModel = new
+                    ContactDetailPageViewModel(Navigation);
             }
-		    else
-		    {
-		        ViewModel = new ContactDeteilPageViewModel(Navigation, contact);
+            else
+            {
+                ViewModel = new
+                    ContactDetailPageViewModel(Navigation, contact);
             }
-		    
-		    this.BindingContext = ViewModel;
-		}
-	}
+
+            this.BindingContext = ViewModel;
+        }
+    }
 }

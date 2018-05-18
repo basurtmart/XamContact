@@ -7,6 +7,7 @@ namespace XamContacts.Abstractions
 {
     public interface ICloudService
     {
-        Task<ICloudTable<T>> GetTableAsync<T>() where T : TableData;
+        Task<ICloudTable<T>> GetTableAsync<T>()
+            where T : TableData;
     }
 }

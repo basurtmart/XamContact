@@ -16,7 +16,8 @@ namespace XamContacts.UWP.Services
     {
         public string GetLocalFilePath(string fileName)
         {
-            return Path.Combine(ApplicationData.Current.LocalFolder.Path, fileName);
+            return Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                fileName);
         }
     }
 }

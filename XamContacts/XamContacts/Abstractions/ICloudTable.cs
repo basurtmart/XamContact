@@ -11,10 +11,10 @@ namespace XamContacts.Abstractions
 {
     public interface ICloudTable<T> where T : TableData
     {
-        Task<T> SavetemAsync(T item);
+        Task<T> SaveItemAsync(T item);
         Task<T> GetItemAsync(string id);
         Task DeleteItemAsync(T item);
         Task<ObservableCollection<T>> GetItemsAsync(bool syncItems = false);
-        Task<ObservableCollection<Gruping<string, Contact>>> GetItemsGrouppedAsync(bool syncItems = false);
+        Task<ObservableCollection<Grouping<string, Contact>>> GetItemsGroupedAsync(bool syncItems = false);
     }
 }

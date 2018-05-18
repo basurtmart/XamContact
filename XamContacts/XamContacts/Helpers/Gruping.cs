@@ -5,11 +5,11 @@ using System.Text;
 
 namespace XamContacts.Helpers
 {
-    public class Gruping<K, T> : ObservableCollection<T>
+    public class Grouping<K, T> : ObservableCollection<T>
     {
         public K Key { get; set; }
 
-        public Gruping(K key, IEnumerable<T> items)
+        public Grouping(K key, IEnumerable<T> items)
         {
             Key = key;
             foreach (var item in items)

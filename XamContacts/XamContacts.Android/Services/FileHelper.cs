@@ -21,7 +21,8 @@ namespace XamContacts.Droid.Services
     {
         public string GetLocalFilePath(string fileName)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string path =
+                Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             return Path.Combine(path, fileName);
         }
     }

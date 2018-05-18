@@ -24,7 +24,7 @@ namespace XamContacts.Services
             table = client.GetSyncTable<T>();
         }
 
-        public async Task<T> SavetemAsync(T item)
+        public async Task<T> SaveItemAsync(T item)
         {
             try
             {
@@ -34,20 +34,29 @@ namespace XamContacts.Services
                 }
                 else
                 {
-                    await table.InsertAsync(item);
+                    try
+                    {
+                        await table.InsertAsync(item);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error: {ex}");
+                Debug.WriteLine($"Error: {ex.Message}");
             }
-
             return item;
         }
 
         public async Task<T> GetItemAsync(string id)
         {
-            var items = await table.Where(i => i.Id == id).ToListAsync();
+            var items = await table
+               .Where(i => i.Id == id)
+               .ToListAsync();
             return items.FirstOrDefault();
         }
 
@@ -64,22 +73,22 @@ namespace XamContacts.Services
                 {
                     await SyncAsync();
                 }
-                IEnumerable<T> items = await table.ToEnumerableAsync();
+                IEnumerable<T> items
+                    = await table.ToEnumerableAsync();
                 return new ObservableCollection<T>(items);
             }
             catch (MobileServiceInvalidOperationException mobileException)
             {
-                Debug.WriteLine($"Excepción: {mobileException}");
+                Debug.WriteLine($"Excepción: {mobileException.Message}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Excepción : {ex}");
+                Debug.WriteLine($"Excepción: {ex.Message}");
             }
-
             return null;
         }
 
-        public async Task<ObservableCollection<Gruping<string, Contact>>> GetItemsGrouppedAsync(bool syncItems = false)
+        public async Task<ObservableCollection<Grouping<string, Contact>>> GetItemsGroupedAsync(bool syncItems = false)
         {
             try
             {
@@ -87,38 +96,43 @@ namespace XamContacts.Services
                 {
                     await SyncAsync();
                 }
-                IEnumerable<Contact> contacts = (IEnumerable<Contact>) await GetItemsAsync();
-                IEnumerable<Gruping<string, Contact>> sorted = new Gruping<string, Contact>[0];
+                IEnumerable<Contact> contacts =
+                    (IEnumerable<Contact>)await GetItemsAsync();
+                IEnumerable<Grouping<string, Contact>> sorted =
+                    new Grouping<string, Contact>[0];
                 if (contacts != null)
                 {
-                    sorted = from c in contacts
+                    sorted =
+                        from c in contacts
                         orderby c.Name
                         group c by c.Name[0].ToString()
                         into theGroup
-                        select new Gruping<string, Contact>(theGroup.Key, theGroup);
+                        select new Grouping<string, Contact>
+                            (theGroup.Key, theGroup);
                 }
-                return new ObservableCollection<Gruping<string, Contact>>(sorted);
+                return new ObservableCollection<Grouping<string, Contact>>(sorted);
             }
             catch (MobileServiceInvalidOperationException mobileException)
             {
-                Debug.WriteLine($"Excepción: {mobileException}");
+                Debug.WriteLine($"Excepción: {mobileException.Message}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Excepción : {ex}");
+                Debug.WriteLine($"Excepción: {ex.Message}");
             }
-
             return null;
         }
 
         public async Task SyncAsync()
         {
-            ReadOnlyCollection<MobileServiceTableOperationError> syncErrors = null;
+            ReadOnlyCollection<MobileServiceTableOperationError>
+                syncErrors = null;
             try
             {
                 await this.client.SyncContext.PushAsync();
-                var queryName = $"incsync_{typeof(T).Name}";
-                await this.table.PullAsync(queryName, this.table.CreateQuery());
+                string queryName = $"incsync_{typeof(T).Name}";
+                await this.table.PullAsync(queryName,
+                    this.table.CreateQuery());
             }
             catch (MobileServicePushFailedException ex)
             {
@@ -131,7 +145,6 @@ namespace XamContacts.Services
             {
                 Debug.WriteLine($"{ex.Message}");
             }
-
             if (syncErrors != null)
             {
                 foreach (var error in syncErrors)

@@ -13,22 +13,33 @@ namespace XamContacts.ViewModel
 {
     public class ContactsPageViewModel
     {
-        public ObservableCollection<Gruping<string, Contact>> ContactsList { get; set; }
+        public ObservableCollection<Grouping<string, Contact>>
+            ContactsList
+        { get; set; }
+
         public Contact CurrentContact { get; set; }
         public Command AddContactCommand { get; set; }
-        public Command ItemTappedCommand { get; set; }
+        public Command ItemTappedCommand { get; }
         public INavigation Navigation { get; set; }
 
         public ContactsPageViewModel(INavigation navigation)
         {
             Navigation = navigation;
+
             var isConnected = CrossConnectivity.Current.IsConnected;
-            //Task.Run(async () => ContactsList = await ContactsManager.DefaultManager.GetItemsGroupedAsync(isConnected)).Wait();
+
+            //Task.Run(async () =>
+            //    ContactsList = await ContactsManager.DefaultManager.GetItemsGroupedAsync(isConnected)).Wait();           
+
             Task.Run(async () =>
-                ContactsList = await App.CloudService.GetTableAsync<Contact>().Result
-                    .GetItemsGrouppedAsync(isConnected)).Wait();
-            AddContactCommand = new Command(async () => await GoToContactDetailPage());
-            ItemTappedCommand = new Command(async () => GoToContactDetailPage(CurrentContact));
+                ContactsList = await App.CloudService.GetTableAsync<Contact>()
+                    .Result
+                    .GetItemsGroupedAsync(isConnected)).Wait();
+
+            AddContactCommand = new Command(async () => await
+                GoToContactDetailPage());
+            ItemTappedCommand = new Command(async () => await
+                GoToContactDetailPage(CurrentContact));
         }
 
         public async Task GoToContactDetailPage(Contact contact = null)
@@ -41,7 +52,6 @@ namespace XamContacts.ViewModel
             {
                 await Navigation.PushAsync(new ContactDetailPage(CurrentContact));
             }
-            
         }
     }
 }

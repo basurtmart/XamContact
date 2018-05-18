@@ -10,19 +10,19 @@ using XamContacts.ViewModel;
 
 namespace XamContacts.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ContactsPage : ContentPage
-	{
-		public ContactsPage ()
-		{
-			InitializeComponent ();
-		    
-		}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ContactsPage : ContentPage
+    {
+        public ContactsPage()
+        {
+            InitializeComponent();
 
-	    protected override void OnAppearing()
-	    {
-	        base.OnAppearing();
-	        this.BindingContext = new ContactsPageViewModel(Navigation);
         }
-	}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            this.BindingContext = new ContactsPageViewModel(Navigation);
+        }
+    }
 }
