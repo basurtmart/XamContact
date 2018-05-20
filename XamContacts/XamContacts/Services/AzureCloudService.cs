@@ -15,7 +15,7 @@ namespace XamContacts.Services
         public AzureCloudService()
         {
             client =
-                new MobileServiceClient("https://democsbackend.azurewebsites.net");
+                new MobileServiceClient("http://democsbackend.azurewebsites.net/");
         }
 
         public async Task<ICloudTable<T>> GetTableAsync<T>() where T : TableData
